@@ -1,10 +1,10 @@
-package com.lightbend.akka.sample;
+package za.co.oneeyesquared.lobber;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.testkit.javadsl.TestKit;
-import com.lightbend.akka.sample.Greeter.*;
-import com.lightbend.akka.sample.Printer.*;
+import za.co.oneeyesquared.lobber.Greeter.*;
+import za.co.oneeyesquared.lobber.Printer.*;
 
 import static org.junit.Assert.assertEquals;
 

@@ -59,7 +59,7 @@
                     <arguments>
                         <argument>-classpath</argument>
                         <classpath />
-                        <argument>com.lightbend.akka.sample.AkkaQuickstart</argument>
+                        <argument>za.co.oneeyesquared.lobber.AkkaQuickstart</argument>
                     </arguments>
                 </configuration>
             </plugin>

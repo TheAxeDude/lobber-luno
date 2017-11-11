@@ -1,9 +1,8 @@
-package com.lightbend.akka.sample;
+package za.co.oneeyesquared.lobber;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import com.lightbend.akka.sample.Printer.Greeting;
 
 //#greeter-messages
 public class Greeter extends AbstractActor {
@@ -44,7 +43,7 @@ public class Greeter extends AbstractActor {
         })
         .match(Greet.class, x -> {
           //#greeter-send-message
-          printerActor.tell(new Greeting(greeting), getSelf());
+          printerActor.tell(new Printer.Greeting(greeting), getSelf());
           //#greeter-send-message
         })
         .build();
