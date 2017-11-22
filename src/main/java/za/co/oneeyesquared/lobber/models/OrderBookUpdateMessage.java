@@ -31,11 +31,11 @@ public class OrderBookUpdateMessage {
         this.timestamp = timestamp;
     }
 
-    public int getSequence() {
+    public long getSequence() {
         return sequence;
     }
 
-    public void setSequence(int sequence) {
+    public void setSequence(long sequence) {
         this.sequence = sequence;
     }
 
@@ -74,7 +74,7 @@ public class OrderBookUpdateMessage {
         this.timestamp = timestamp;
     }
 
-    private int
+    private long
             sequence;
     private TradeUpdate
             [] trade_updates;

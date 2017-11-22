@@ -59,7 +59,7 @@
                     <arguments>
                         <argument>-classpath</argument>
                         <classpath />
-                        <argument>za.co.oneeyesquared.lobber.AkkaQuickstart</argument>
+                        <argument>za.co.oneeyesquared.lobber.Lobber</argument>
                     </arguments>
                 </configuration>
             </plugin>

@@ -12,7 +12,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class AkkaQuickstartTest {
+public class LobberTest {
     static ActorSystem system;
 
     @BeforeClass
