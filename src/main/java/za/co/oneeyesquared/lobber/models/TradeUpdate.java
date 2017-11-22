@@ -1,5 +1,7 @@
 package za.co.oneeyesquared.lobber.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by Balitha on 2017-11-09.
  */
@@ -39,6 +41,7 @@ public class TradeUpdate {
         return orderID;
     }
 
+    @JsonProperty("order_id")
     public void setOrderID(String orderID) {
         this.orderID = orderID;
     }
