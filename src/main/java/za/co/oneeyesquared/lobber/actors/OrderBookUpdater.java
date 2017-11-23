@@ -7,6 +7,7 @@ import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import za.co.oneeyesquared.lobber.models.LimitOrderBookMessage;
 import za.co.oneeyesquared.lobber.models.OrderBookUpdateMessage;
+import za.co.oneeyesquared.lobber.models.UpdateCompletedMessage;
 
 import java.util.HashMap;
 
@@ -49,6 +50,14 @@ public class OrderBookUpdater  extends AbstractActor{
                     }else{
                         limitOrderBookActor.tell(orderBookUpdateMessage, getSelf());
                     }
+                })
+                .match(UpdateCompletedMessage.class, updateMessage -> {
+
+                    log.info("Completed applying: " + updateMessage.getSequenceID());
+                    unappliedUpdates.remove(updateMessage.getSequenceID());
+                    if(unappliedUpdates.get(updateMessage.getSequenceID()+1) != null)
+                        limitOrderBookActor.tell(unappliedUpdates.get(updateMessage.getSequenceID()+1), getSelf());
+
                 })
                 .matchAny(o -> log.info("received unknown message"))
                 .build();
