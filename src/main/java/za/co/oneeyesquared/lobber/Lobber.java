@@ -48,6 +48,7 @@ public class Lobber extends AbstractActor {
 
 
       String apiAuth = "{\"api_key_id\":\""+appConfig.getString("LUNO_KEY_ID")+"\",\"api_key_secret\": \"" + appConfig.getString("LUNO_SECRET") +"\"}";
+//      String wsUrl = "wss://ws.luno.com/api/1/stream/ETHXBT";
       String wsUrl = "wss://ws.luno.com/api/1/stream/XBTZAR";
 
       final Source<Message, CompletableFuture<Optional<Message>>> source =

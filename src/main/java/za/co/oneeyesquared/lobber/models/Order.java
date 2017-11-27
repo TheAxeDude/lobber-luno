@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Created by Balitha on 2017-11-09.
  */
-public class Order {
+public class Order implements Comparable{
     private String orderID;
     private String type;
     private double price;
@@ -71,5 +71,17 @@ public class Order {
                 ", price=" + price +
                 ", volume=" + volume +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (this.getPrice() < ((Order)o).getPrice())
+            return -1;
+
+        else if (this.getPrice() > ((Order)o).getPrice())
+            return 1;
+
+        else
+            return 0;
     }
 }

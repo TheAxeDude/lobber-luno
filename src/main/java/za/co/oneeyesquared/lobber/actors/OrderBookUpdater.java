@@ -54,6 +54,7 @@ public class OrderBookUpdater  extends AbstractActor{
                 .match(UpdateCompletedMessage.class, updateMessage -> {
 
                     log.info("Completed applying: " + updateMessage.getSequenceID());
+
                     unappliedUpdates.remove(updateMessage.getSequenceID());
                     if(unappliedUpdates.get(updateMessage.getSequenceID()+1) != null)
                         limitOrderBookActor.tell(unappliedUpdates.get(updateMessage.getSequenceID()+1), getSelf());
