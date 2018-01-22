@@ -60,18 +60,28 @@ public class LimitOrderBook extends AbstractActor {
                     log.debug(orderBookUpdateMessage.toString());
                     if(orderBookUpdateMessage.getTrade_updates() != null) {
                         for (TradeUpdate tradeUpdate : orderBookUpdateMessage.getTrade_updates()) {
+                            String updateSide = "ASKS";
                             log.info("Trade update: " + tradeUpdate.getOrderID());
 
-                            Optional<Order> order = this.orders.get("ASKS").values().stream().filter(o -> o.getOrderID().equals(tradeUpdate.getOrderID())).findFirst();
+                            Optional<Order> order = this.orders.get(updateSide).values().stream().filter(o -> o.getOrderID().equals(tradeUpdate.getOrderID())).findFirst();
                             if(!order.isPresent()){
-                                order = this.orders.get("BIDS").values().stream().filter(o -> o.getOrderID().equals(tradeUpdate.getOrderID())).findFirst();
+                                updateSide = "BIDS";
+                                order = this.orders.get(updateSide).values().stream().filter(o -> o.getOrderID().equals(tradeUpdate.getOrderID())).findFirst();
                             }
 
                             if(order.isPresent()){
-                                order.get().setVolume(order.get().getVolume() - tradeUpdate.getBase());
+                                double newVolume = order.get().getVolume() - tradeUpdate.getBase();
+                                ordersGroupedByPriceAndSorted.get(updateSide).remove(order.get());
+                                order.get().setVolume(newVolume);
+
+                                //dont return to order book if the volume is zero
+                                if(newVolume > 0d)
+                                    ordersGroupedByPriceAndSorted.get(updateSide).add(order.get());
+
                             }
                         }
                     }
+
 
                     /*NOTE: IT IS Very important that the "create" occurs after the "update". If it is before, then partial fills will be incorrect.
                     *SEE: https://www.luno.com/en/api#streaming-websocket
@@ -102,7 +112,7 @@ public class LimitOrderBook extends AbstractActor {
                         log.debug("SORTEDAFTER: {} BIDS / {} ASKS", this.ordersGroupedByPriceAndSorted.get("BIDS").size(), this.ordersGroupedByPriceAndSorted.get("ASKS").size());
                     }
                     //appliedUpdates.put(orderBookUpdateMessage.getSequence(), orderBookUpdateMessage);
-
+                    log.info("Spread calc: {} - {} = {}", ordersGroupedByPriceAndSorted.get("ASKS").first().getPrice(), ordersGroupedByPriceAndSorted.get("BIDS").last().getPrice(), ordersGroupedByPriceAndSorted.get("ASKS").first().getPrice() - ordersGroupedByPriceAndSorted.get("BIDS").last().getPrice());
                     this.setSpread(ordersGroupedByPriceAndSorted.get("ASKS").first().getPrice() - ordersGroupedByPriceAndSorted.get("BIDS").last().getPrice());
                     this.setMarketPrice((ordersGroupedByPriceAndSorted.get("ASKS").first().getPrice() + ordersGroupedByPriceAndSorted.get("BIDS").last().getPrice())/2);
                     log.info("Spread: {}", this.getSpread());

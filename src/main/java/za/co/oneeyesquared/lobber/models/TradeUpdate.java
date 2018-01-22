@@ -9,11 +9,15 @@ public class TradeUpdate {
     private double base;
     private double counter;
     private String orderID;
+    private String takerOrderID;
+    private String makerOrderID;
 
-    public TradeUpdate(double base, double counter, String orderID) {
+    public TradeUpdate(double base, double counter, String orderID, String takerOrderID, String makerOrderID) {
         this.base = base;
         this.counter = counter;
         this.orderID = orderID;
+        this.takerOrderID = takerOrderID;
+        this.makerOrderID = makerOrderID;
     }
 
     public TradeUpdate(){
@@ -44,5 +48,24 @@ public class TradeUpdate {
     @JsonProperty("order_id")
     public void setOrderID(String orderID) {
         this.orderID = orderID;
+    }
+
+    public String getMakerOrderID() {
+        return makerOrderID;
+    }
+
+    @JsonProperty("maker_order_id")
+    public void setMakerOrderID(String makerOrderID) {
+        this.makerOrderID = makerOrderID;
+    }
+
+    public String getTakerOrderID() {
+        return takerOrderID;
+    }
+
+
+    @JsonProperty("taker_order_id")
+    public void setTakerOrderID(String takerOrderID) {
+        this.takerOrderID = takerOrderID;
     }
 }

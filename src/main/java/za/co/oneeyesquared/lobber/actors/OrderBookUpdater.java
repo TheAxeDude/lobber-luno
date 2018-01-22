@@ -44,12 +44,20 @@ public class OrderBookUpdater  extends AbstractActor{
                     log.debug(orderBookUpdateMessage.toString());
                     if(this.limitOrderBookActor == null)
                     {
+                        if(unappliedUpdates.size() > 10)
+                        {
+                            System.exit(9);
+                        }
+
                         log.debug("No order book received yet.");
+
 
                         unappliedUpdates.put(orderBookUpdateMessage.getSequence(), orderBookUpdateMessage);
                     }else{
                         limitOrderBookActor.tell(orderBookUpdateMessage, getSelf());
                     }
+
+
                 })
                 .match(UpdateCompletedMessage.class, updateMessage -> {
 
